@@ -1,0 +1,51 @@
+===============================================================================
+diffscgen - Diff Speedcode Generator - Version 1.0
+                                                            by Spider Jerusalem
+===============================================================================
+
+Description:
+============
+diffscgen creates 6502 speedcode that is needed to generate the destination    
+file(s) from the given source file(s).
+
+If more than two input files are given multiple routines will be created. I.e.
+for 3 files:
+   routine1 : file1 -> file2
+   routine2 : file2 -> file3
+
+So if you want make an animation loop, you could use the command:
+   diffscgen file1 file2 file3 file1
+
+Hint: use sane filenames for your infiles, because the assembler labels for
+the routines will be created automagically depending on the filenames.
+I.e. "file1_to_file1:", "my_srcfile_prg_to_my_dstfile_prg:"
+
+Usage:
+======
+   diffscgen [options] {files}
+
+Usage examples:
+===============
+   diffscgen infile_src infile_dst
+   diffscgen -o outfile infile_src infile_dst
+   diffscgen -o outfile -l mylabel infile_src infile_dst
+   diffscgen -o outfile -l mylabel -r x infile_src infile_dst
+   diffscgen -o outfile -l mylabel -r y -s 0x7e infile_src infile_dst
+
+Command line options:
+=====================
+   -i spaces  : intendation of exported speedcode (space characters).
+                [default: 4]
+   -l mylabel : label to be used in the output speedcode before offset.
+                [default: INFILE_SRC]
+   -o outfile : name of the output file for the speedcode.
+                [default: out.asm]
+   -r [a,x,y] : register to be used for the speedcode (a, x or y). If set to
+                x or y the speedcode will use inx/iny for successive values.
+                Depending on the files this will reduce speedcode size.
+                [default: a]
+   -s skip    : number of bytes to be skipped. I.e. set -s 2 for .PRG files
+                or -s 0x7e for .SID files.
+                [default: 0]
+
+Have fun!
